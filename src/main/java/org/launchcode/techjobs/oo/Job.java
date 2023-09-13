@@ -95,12 +95,27 @@ public class Job {
 
     @Override
     public String toString(){
-        return System.lineSeparator()
-                + "ID: " + this.getId() + System.lineSeparator()
-                + "Name: " + this.getName() + System.lineSeparator()
-                + "Employer: " + this.getEmployer().getValue() + System.lineSeparator()
-                + "Location: " + this.getLocation().getValue() + System.lineSeparator()
-                + "Position Type: " + this.getPositionType().getValue() + System.lineSeparator()
-                + "Core Competency: " + this.getCoreCompetency().getValue() + System.lineSeparator();
+        String unavailable = "Data not available";
+        String output =  System.lineSeparator()
+                + "ID: " + this.getId() + System.lineSeparator() + "Name: ";
+        output += this.getName().isEmpty() ? unavailable : this.getName();
+        output += System.lineSeparator() + "Employer: ";
+        output += this.getEmployer().getValue().isEmpty() ? unavailable : this.getEmployer().getValue();
+        output += System.lineSeparator() + "Location: ";
+        output += this.getLocation().getValue().isEmpty() ? unavailable :  this.getLocation().getValue();
+        output += System.lineSeparator() + "Position Type: ";
+        output += this.getPositionType().getValue().isEmpty() ? unavailable : this.getPositionType().getValue();
+        output += System.lineSeparator() + "Core Competency: ";
+        output += this.getCoreCompetency().getValue().isEmpty() ? unavailable : this.getCoreCompetency().getValue();
+        output += System.lineSeparator();
+
+        if (this.getName().isEmpty() && this.getEmployer().getValue().isEmpty()
+                && this.getLocation().getValue().isEmpty() && this.getPositionType().getValue().isEmpty()
+                && this.getCoreCompetency().getValue().isEmpty()) {
+            output = "OOPS! This job does not seem to exist.";
+        }
+
+
+        return output;
     }
 }

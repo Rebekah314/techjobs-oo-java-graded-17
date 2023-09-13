@@ -1,5 +1,6 @@
 package org.launchcode.techjobs.oo;
 import static org.junit.jupiter.api.Assertions.*;
+import static java.lang.System.lineSeparator;
 
 
 import org.junit.Test;
@@ -48,8 +49,8 @@ public class JobTest {
         Job test_job = new Job("test name", new Employer("test employer"),
                 new Location("test location"), new PositionType("test type"),
                 new CoreCompetency("test competency"));
-        assertEquals('\n', test_job.toString().charAt(0));
-        assertEquals('\n', test_job.toString().charAt(test_job.toString().length()-1));
+        assertEquals(lineSeparator(), String.valueOf(test_job.toString().charAt(0)));
+        assertEquals(lineSeparator(), String.valueOf(test_job.toString().charAt(test_job.toString().length()-1)));
     }
     @Test
     public void testToStringContainsCorrectLabelsAndData() {
@@ -71,5 +72,33 @@ public class JobTest {
                 + System.lineSeparator();
 
         assertEquals(jobToString, test_job.toString());
+    }
+    @Test
+    public void testToStringHandlesEmptyField() {
+        Job test_job = new Job("test name", new Employer("test employer"),
+                new Location("test location"), new PositionType("test type"),
+                new CoreCompetency(""));
+        String jobToString = System.lineSeparator()
+                + "ID: " + test_job.getId()
+                + System.lineSeparator()
+                + "Name: " + test_job.getName()
+                + System.lineSeparator()
+                + "Employer: " + test_job.getEmployer().getValue()
+                + System.lineSeparator()
+                + "Location: " + test_job.getLocation().getValue()
+                + System.lineSeparator()
+                + "Position Type: " + test_job.getPositionType().getValue()
+                + System.lineSeparator()
+                + "Core Competency: " + "Data not available"
+                + System.lineSeparator();
+
+        assertEquals(jobToString, test_job.toString());
+    }
+    @Test
+    public void testToStringHandlesEmptyJob() {
+        Job empty_job = new Job("", new Employer(""),
+                new Location(""), new PositionType(""),
+                new CoreCompetency(""));
+        assertEquals("OOPS! This job does not seem to exist.", empty_job.toString());
     }
 }
